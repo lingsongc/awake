@@ -1,5 +1,5 @@
 import React from 'react';
-import { Play, Sparkles } from 'lucide-react';
+import { Play } from 'lucide-react';
 
 interface TitleScreenProps {
   onStart: () => void;
@@ -17,21 +17,7 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
       aria-label="WIDE AWAKE Title Screen"
       className="absolute inset-0 z-40 bg-gradient-to-t from-black via-[#060e09]/95 to-black/80 flex flex-col items-center justify-between p-4 sm:p-8 select-none overflow-y-auto"
     >
-      <div className="w-full flex justify-between items-center">
-        <div className="text-[11px] font-mono tracking-widest text-emerald-500/80 uppercase">
-          FORENSIC PSYCHOLOGY MYSTERY
-        </div>
-        <div className="text-[11px] font-mono text-emerald-400/60">
-          ACT I - ACT III
-        </div>
-      </div>
-
       <div className="flex flex-col items-center text-center max-w-xl my-auto py-6">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-600/60 text-emerald-300 font-mono text-xs mb-4">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>Interactive Detective Experience</span>
-        </div>
-
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white mb-3 font-mono">
           WIDE <span className="text-emerald-400">AWAKE</span>
         </h1>

@@ -134,7 +134,6 @@ export const ACT1_HOTSPOTS: Hotspot[] = [
       { speaker: '(N)', text: 'The screen is lit. 34 unread messages.' },
       { speaker: '(N)', text: 'Mum: "Jun where are you? Answer me please."' },
       { speaker: '(N)', text: 'Team lead: "Third day missing. We called your emergency contact."' },
-      { speaker: '(N)', text: 'Clue recorded: Phone with urgent messages from family and friends.' },
     ],
   },
   {
@@ -149,7 +148,6 @@ export const ACT1_HOTSPOTS: Hotspot[] = [
     examineLines: [
       { speaker: '(N)', text: 'The deadbolt is thrown shut. Heavy tape lines the edges of the frame.' },
       { speaker: '(N)', text: 'The barricade was set from the inside, out of overwhelming fear of imaginary threats outside.' },
-      { speaker: '(N)', text: 'Clue recorded: Sealed bedroom door, locked from within.' },
     ],
   },
   {
@@ -164,7 +162,6 @@ export const ACT1_HOTSPOTS: Hotspot[] = [
     examineLines: [
       { speaker: '(N)', text: 'Crushed plastic bottles. Cut straws. Discarded foil.' },
       { speaker: '(N)', text: 'A sharp, bitter chemical odor clings to the bedroom carpet.' },
-      { speaker: '(N)', text: 'Clue recorded: Scattered foil and supplies on the floor.' },
     ],
   },
 ];
@@ -175,30 +172,28 @@ export const ACT3_HOTSPOTS: Hotspot[] = [
     id: 'hs_eyes',
     name: 'Examine the eyes',
     clueId: 'm_eyes',
-    x: 44,
-    y: 24,
+    x: 45,
+    y: 7,
     width: 12,
     height: 12,
     hint: 'Look closely into the eyes in the mirror reflection.',
     examineLines: [
       { speaker: '(N)', text: 'The pupils fill almost the entire eye. Dark hollow circles beneath them.' },
       { speaker: '(N)', text: 'The look of someone whose mind and body have not rested in several days.' },
-      { speaker: '(N)', text: 'Observation recorded: Dilated pupils and severe exhaustion.' },
     ],
   },
   {
     id: 'hs_jaw',
     name: 'Examine the jaw & mouth',
     clueId: 'm_jaw',
-    x: 44,
-    y: 38,
+    x: 45,
+    y: 18,
     width: 12,
     height: 12,
     hint: 'Inspect the lower face and mouth in the reflection.',
     examineLines: [
       { speaker: '(N)', text: 'The jaw is locked in a tight clench, teeth grinding involuntarily.' },
       { speaker: '(N)', text: 'Lips are parched, dry, and cracked.' },
-      { speaker: '(N)', text: 'Observation recorded: Involuntary jaw clenching and dehydration.' },
     ],
   },
   {
@@ -213,7 +208,6 @@ export const ACT3_HOTSPOTS: Hotspot[] = [
     examineLines: [
       { speaker: '(N)', text: 'Fingers trembling uncontrollably against the counter.' },
       { speaker: '(N)', text: 'A racing pulse is visible in the side of the neck.' },
-      { speaker: '(N)', text: 'Observation recorded: Trembling hands and racing pulse.' },
     ],
   },
 ];
