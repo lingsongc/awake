@@ -37,7 +37,7 @@ const CASE_CARDS: CaseFileCard[] = [
   {
     id: 'card_aisyah',
     frontTitle: 'CLOAKED FIGURE',
-    frontSubtitle: 'Figure in yellow cardigan',
+    frontSubtitle: 'Figure with yellow hairclip',
     frontDesc: 'Interpreted as a hostile intruder attempting to break into the apartment.',
     cardId: 'aisyah',
     backTitle: 'AISYAH',

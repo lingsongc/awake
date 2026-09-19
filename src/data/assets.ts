@@ -106,7 +106,7 @@ export const PROJECT_ASSETS: ProjectAsset[] = [
   {
     key: 'aisyah_monster',
     filename: 'aisyah_monster.png',
-    label: 'Aisyah (Surveillance Figure / Yellow Cardigan)',
+    label: 'Aisyah (Surveillance Figure / Yellow Hairclip)',
     type: 'character',
     path: getAssetUrl('aisyah_monster.png'),
     requiredFor: 'Act 2: Suspects Confrontation',
@@ -114,7 +114,7 @@ export const PROJECT_ASSETS: ProjectAsset[] = [
   {
     key: 'aisyah_human',
     filename: 'aisyah_human.png',
-    label: 'Aisyah (Colleague / Yellow Cardigan with Support Contacts)',
+    label: 'Aisyah (Colleague / Yellow Hairclip with Support Contacts)',
     type: 'character',
     path: getAssetUrl('aisyah_human.png'),
     requiredFor: 'Flashback & Casefile Truth',

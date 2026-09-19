@@ -20,6 +20,7 @@ import { CaseFileScreen } from './components/CaseFileScreen';
 import { KioskPreloader } from './components/KioskPreloader';
 import { SCENES, INITIAL_GAME_STATE } from './data/scenes';
 import { ACT1_HOTSPOTS, ACT3_HOTSPOTS, Hotspot } from './data/clues';
+import { resolveCharacterAsset } from './data/assets';
 import { GameState, SceneChoice, DialogueLine } from './types';
 import { RotateCcw, AlertTriangle, Monitor } from 'lucide-react';
 import { useModalAccessibility } from './hooks/useModalAccessibility';
@@ -563,6 +564,10 @@ export default function App() {
       ]
     : currentScene.characters;
 
+  const mirrorSceneImage = isMirrorScene
+    ? customImages['jun_mirror.png'] || resolveCharacterAsset('jun', 'human', true).path
+    : undefined;
+
   const getCustomImageForCharacter = (
     id: 'mum' | 'ravi' | 'aisyah' | 'jun',
     variant: 'monster' | 'human',
@@ -625,14 +630,14 @@ export default function App() {
           {/* Layer 1: Background */}
           <BackgroundLayer
             sceneId={renderedBg}
-            customImageSrc={customImages[`${renderedBg}.png`]}
+            customImageSrc={mirrorSceneImage || customImages[`${renderedBg}.png`]}
             mode={gameState.mode}
             isDebugMode={isDebugMode}
             onAssetError={handleAssetError}
           />
 
           {/* Layer 2: Characters */}
-          {renderedCharacters.map((char) => {
+          {!isMirrorScene && renderedCharacters.map((char) => {
             const charVariant =
               char.variant || (gameState.mode === 'hallucination' ? 'monster' : 'human');
             return (
@@ -642,6 +647,8 @@ export default function App() {
                 variant={charVariant}
                 position={char.position}
                 isMirrorScene={isMirrorScene}
+                isLarge={renderedCharacters.length > 0 && !isMirrorScene}
+                isPortrait={isPortrait}
                 isDebugMode={isDebugMode}
                 onAssetError={handleAssetError}
                 customImageSrc={getCustomImageForCharacter(char.id, charVariant, isMirrorScene)}
@@ -721,7 +728,8 @@ export default function App() {
           )}
 
           {/* Dialogue Box */}
-          {currentScene.type !== 'title' &&
+          {currentLine.text &&
+            currentScene.type !== 'title' &&
             currentScene.type !== 'end' &&
             gameState.currentSceneId !== 'act4_deduction' &&
             gameState.currentSceneId !== 'casefile' && (

@@ -25,7 +25,7 @@ export const SearchHUD: React.FC<SearchHUDProps> = ({
       id="search-hud"
       className={isPortrait ? 'w-full px-3 py-2 z-30' : 'absolute top-3 right-4 z-30'}
     >
-      <div className={`pointer-events-auto shrink-0 ${reduceMotion ? '' : 'animate-bounce'}`}>
+      <div className="pointer-events-auto shrink-0">
         <button
           id="search-proceed-btn"
           type="button"
