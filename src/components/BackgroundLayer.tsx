@@ -30,15 +30,6 @@ export const BackgroundLayer: React.FC<BackgroundLayerProps> = ({
   }, [primarySrc]);
 
   const handleImageError = () => {
-    // Try alternate assets/images/ path before failing
-    if (activeSrc.includes('/assets/') && !activeSrc.includes('/assets/images/')) {
-      setActiveSrc(activeSrc.replace('/assets/', '/assets/images/'));
-      return;
-    }
-    if (activeSrc.includes('/assets/images/')) {
-      setActiveSrc(activeSrc.replace('/assets/images/', '/assets/'));
-      return;
-    }
     setImageFailed(true);
     onAssetError?.(defaultAsset.filename);
   };

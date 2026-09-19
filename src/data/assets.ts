@@ -12,7 +12,7 @@ export interface ProjectAsset {
   requiredFor: string;
 }
 
-// Base URL helper to support standard web hosting and subpath deployments
+// Base URL helper to support standard web hosting and subpath deployments.
 const BASE =
   typeof import.meta !== 'undefined' && import.meta.env?.BASE_URL
     ? import.meta.env.BASE_URL.endsWith('/')
@@ -20,8 +20,24 @@ const BASE =
       : `${import.meta.env.BASE_URL}/`
     : '/';
 
+// Keep the artwork in src/assets/images so Vite fingerprints and bundles it.
+// The explicit URLs are intentionally static: Vite rewrites these references
+// for both the dev server and production builds.
+const SOURCE_IMAGE_URLS: Record<string, string> = {
+  'bg_bedroom.png': new URL('../assets/images/bg_bedroom.png', import.meta.url).href,
+  'bg_living.png': new URL('../assets/images/bg_living.png', import.meta.url).href,
+  'bg_hallway.png': new URL('../assets/images/bg_hallway.png', import.meta.url).href,
+  'mum_monster.png': new URL('../assets/images/mum_monster.png', import.meta.url).href,
+  'mum_human.png': new URL('../assets/images/mum_human.png', import.meta.url).href,
+  'ravi_monster.png': new URL('../assets/images/ravi_monster.png', import.meta.url).href,
+  'ravi_human.png': new URL('../assets/images/ravi_human.png', import.meta.url).href,
+  'aisyah_monster.png': new URL('../assets/images/aisyah_monster.png', import.meta.url).href,
+  'aisyah_human.png': new URL('../assets/images/aisyah_human.png', import.meta.url).href,
+  'jun_mirror.png': new URL('../assets/images/jun_mirror.png', import.meta.url).href,
+};
+
 export const getAssetUrl = (filename: string): string =>
-  `${BASE}assets/${filename}`;
+  SOURCE_IMAGE_URLS[filename] ?? `${BASE}assets/images/${filename}`;
 
 export const PROJECT_ASSETS: ProjectAsset[] = [
   // Backgrounds
