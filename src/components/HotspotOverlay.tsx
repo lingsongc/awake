@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Hotspot } from '../data/clues';
-import { Search, CheckCircle2, HelpCircle } from 'lucide-react';
+import { Search, CheckCircle2 } from 'lucide-react';
 
 interface HotspotOverlayProps {
   hotspots: Hotspot[];
   foundClueIds: string[];
   onSelectHotspot: (hotspot: Hotspot) => void;
   disabled?: boolean;
-  lastActivityTime?: number;
-  reduceMotion?: boolean;
 }
 
 export const HotspotOverlay: React.FC<HotspotOverlayProps> = ({
@@ -16,41 +14,12 @@ export const HotspotOverlay: React.FC<HotspotOverlayProps> = ({
   foundClueIds,
   onSelectHotspot,
   disabled = false,
-  lastActivityTime = Date.now(),
-  reduceMotion = false,
 }) => {
-  const [isIdleHintActive, setIsIdleHintActive] = useState(false);
-
-  // 10-second idle hint
-  useEffect(() => {
-    const checkHint = setInterval(() => {
-      if (Date.now() - lastActivityTime > 10000) {
-        setIsIdleHintActive(true);
-      } else {
-        setIsIdleHintActive(false);
-      }
-    }, 1000);
-
-    return () => clearInterval(checkHint);
-  }, [lastActivityTime]);
-
   return (
     <div
       id="hotspot-layer"
       className="absolute inset-0 z-30 pointer-events-none"
     >
-      {/* 10s Idle helper banner if any undiscovered clues remain */}
-      {isIdleHintActive && hotspots.some((h) => !foundClueIds.includes(h.clueId)) && (
-        <div
-          className={`absolute top-16 left-1/2 -translate-x-1/2 z-40 bg-[#08120c]/95 border border-amber-500/80 px-4 py-2 rounded-full text-xs font-mono text-amber-300 shadow-[0_0_25px_rgba(245,158,11,0.35)] flex items-center gap-2 pointer-events-auto ${
-            reduceMotion ? '' : 'animate-bounce'
-          }`}
-        >
-          <HelpCircle className="w-4 h-4 text-amber-400 shrink-0" />
-          <span>Look for the glowing investigation reticles to examine evidence</span>
-        </div>
-      )}
-
       {hotspots.map((hs) => {
         const isDiscovered = foundClueIds.includes(hs.clueId);
         const ariaLabel = isDiscovered
@@ -69,20 +38,7 @@ export const HotspotOverlay: React.FC<HotspotOverlayProps> = ({
             }}
             className="absolute pointer-events-auto flex items-center justify-center group"
           >
-            {/* Outline box */}
-            <div
-              className={`absolute inset-0 rounded-2xl pointer-events-none transition-all duration-200 ${
-                isDiscovered
-                  ? 'border-2 border-dashed border-emerald-500/40 bg-emerald-950/10'
-                  : isIdleHintActive
-                  ? `border-2 border-amber-400 bg-amber-500/10 shadow-[inset_0_0_20px_rgba(245,158,11,0.25)] ${
-                      reduceMotion ? '' : 'animate-pulse'
-                    }`
-                  : 'border border-dashed border-amber-400/50 group-hover:border-amber-300 group-hover:bg-amber-400/10'
-              }`}
-            />
-
-            {/* Interactive Target Reticle (Minimum 48px touch target) */}
+            {/* Subtle interactive target; the scene stays clear until hovered. */}
             <button
               type="button"
               disabled={disabled}
@@ -92,36 +48,16 @@ export const HotspotOverlay: React.FC<HotspotOverlayProps> = ({
               }}
               aria-label={ariaLabel}
               title={hs.name}
-              className={`relative z-10 flex items-center justify-center min-w-[48px] min-h-[48px] w-12 h-12 md:w-14 md:h-14 rounded-full transition-all duration-200 transform active:scale-95 cursor-pointer focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-400 ${
+              className={`relative z-10 flex items-center justify-center min-w-[48px] min-h-[48px] w-12 h-12 md:w-14 md:h-14 rounded-full transition-all duration-200 transform active:scale-95 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 ${
                 isDiscovered
-                  ? 'bg-emerald-950/90 border-2 border-emerald-400 text-emerald-300 shadow-md ring-2 ring-emerald-500/30'
-                  : isIdleHintActive
-                  ? `bg-amber-500 border-2 border-amber-200 text-black scale-110 shadow-lg ring-4 ring-amber-400/40 ${
-                      reduceMotion ? '' : 'animate-pulse'
-                    }`
-                  : `bg-amber-950/95 border-2 border-amber-400 text-amber-300 hover:scale-105 shadow-md ring-2 ring-amber-500/30 ${
-                      reduceMotion ? '' : 'animate-pulse'
-                    }`
+                  ? 'bg-emerald-950/25 border border-emerald-300/45 text-emerald-200/80 hover:bg-emerald-900/40'
+                  : 'bg-amber-950/25 border border-amber-200/45 text-amber-200/80 hover:bg-amber-900/40 hover:border-amber-200/70'
               }`}
             >
-              {/* Outer pulsing ring for undiscovered items (disabled in reduce-motion) */}
-              {!isDiscovered && !reduceMotion && (
-                <span
-                  aria-hidden="true"
-                  className={`absolute -inset-2 rounded-full border pointer-events-none animate-ping ${
-                    isIdleHintActive ? 'border-amber-300 border-2' : 'border-amber-400/60'
-                  }`}
-                />
-              )}
-
               {isDiscovered ? (
                 <CheckCircle2 className="w-6 h-6 text-emerald-400" />
               ) : (
-                <Search
-                  className={`w-6 h-6 ${
-                    isIdleHintActive ? 'text-black stroke-[2.5]' : 'text-amber-300'
-                  }`}
-                />
+                <Search className="w-6 h-6 text-amber-200/80" />
               )}
             </button>
 

@@ -21,7 +21,7 @@ import { KioskPreloader } from './components/KioskPreloader';
 import { SCENES, INITIAL_GAME_STATE } from './data/scenes';
 import { ACT1_HOTSPOTS, ACT3_HOTSPOTS, Hotspot } from './data/clues';
 import { GameState, SceneChoice, DialogueLine } from './types';
-import { RotateCcw, Users, BookOpen, AlertTriangle, Monitor, Sparkles, EyeOff, Eye } from 'lucide-react';
+import { RotateCcw, AlertTriangle, Monitor } from 'lucide-react';
 import { useModalAccessibility } from './hooks/useModalAccessibility';
 
 export type ActiveOverlay =
@@ -656,8 +656,6 @@ export default function App() {
               foundClueIds={gameState.clues}
               onSelectHotspot={handleSelectHotspot}
               disabled={activeOverlay !== 'none'}
-              lastActivityTime={lastActivityRef.current}
-              reduceMotion={reduceMotion}
             />
           )}
         </div>
@@ -696,71 +694,12 @@ export default function App() {
                 </button>
               </div>
 
-              {/* Right group: Evidence Notebook, Suspect Profiles & Motion Toggle */}
-              <div className="flex items-center gap-2 pointer-events-auto">
-                {/* Evidence Notebook Button */}
-                <button
-                  id="notebook-drawer-trigger"
-                  type="button"
-                  onClick={() => setActiveOverlay('case_notebook')}
-                  aria-label={`Open Case Notebook. ${gameState.clues.length} evidence pieces recorded.`}
-                  className="min-h-[44px] px-3.5 py-2 rounded-xl bg-[#0a1410]/95 hover:bg-[#152a1e] border border-[#203a2c] hover:border-emerald-500 text-xs font-mono text-emerald-300 backdrop-blur-md shadow-lg transition-all flex items-center gap-1.5 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
-                >
-                  <BookOpen className="w-4 h-4 text-emerald-400" />
-                  <span className="font-bold">Evidence ({gameState.clues.length})</span>
-                </button>
-
-                {/* Suspect Profiles Button */}
-                <button
-                  id="suspect-board-trigger"
-                  type="button"
-                  onClick={() => setActiveOverlay('suspect_board')}
-                  aria-label={`Open Witness Profiles. ${gameState.questioned.length} of 3 encountered.`}
-                  className="min-h-[44px] px-3.5 py-2 rounded-xl bg-[#0a1410]/95 hover:bg-[#152a1e] border border-[#203a2c] hover:border-amber-500 text-xs font-mono text-amber-300 backdrop-blur-md shadow-lg transition-all flex items-center gap-1.5 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
-                >
-                  <Users className="w-4 h-4 text-amber-400" />
-                  <span className="font-bold">
-                    {isPostReveal ? 'People (3)' : 'Witnesses (3)'}
-                  </span>
-                </button>
-
-                {/* Reduce Motion Toggle */}
-                <button
-                  id="reduce-motion-toggle-btn"
-                  type="button"
-                  onClick={toggleReduceMotion}
-                  aria-pressed={reduceMotion}
-                  aria-label={`Reduce Motion: ${reduceMotion ? 'ON (Reduced)' : 'OFF (Normal animations)'}. Click to toggle.`}
-                  title={`Motion: ${reduceMotion ? 'Reduced' : 'Normal'}`}
-                  className={`min-h-[44px] px-3 py-2 rounded-xl border text-xs font-mono backdrop-blur-md shadow-lg transition-all flex items-center gap-1.5 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 ${
-                    reduceMotion
-                      ? 'bg-amber-950/80 border-amber-500/80 text-amber-200 font-bold'
-                      : 'bg-[#0a1410]/95 border-[#203a2c] text-slate-400 hover:text-white'
-                  }`}
-                >
-                  {reduceMotion ? (
-                    <EyeOff className="w-4 h-4 text-amber-300" />
-                  ) : (
-                    <Eye className="w-4 h-4 text-emerald-400" />
-                  )}
-                  <span className="hidden sm:inline">
-                    {reduceMotion ? 'Motion: Low' : 'Motion: Full'}
-                  </span>
-                </button>
-              </div>
             </div>
           )}
 
           {/* Search HUD Bar */}
           {isSearchScene && (
             <SearchHUD
-              sceneTitle={
-                gameState.currentSceneId === 'act1_room'
-                  ? 'BEDROOM // INVESTIGATE THE ROOM'
-                  : 'HALLWAY // EXAMINE THE MIRROR'
-              }
-              foundClues={searchSceneCluesFound}
-              totalClues={currentHotspots.length}
               canProceed={canProceedFromSearch}
               proceedLabel={
                 gameState.currentSceneId === 'act1_room'
