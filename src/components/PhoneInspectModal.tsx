@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Smartphone, CheckCircle2, MessageSquare, AlertCircle, X, ChevronRight } from 'lucide-react';
+import { CheckCircle2, MessageSquare, AlertCircle, ChevronRight } from 'lucide-react';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
 
 interface PhoneInspectModalProps {
@@ -36,7 +36,7 @@ export const PhoneInspectModal: React.FC<PhoneInspectModalProps> = ({
       id="phone-modal-overlay"
       role="dialog"
       aria-modal="true"
-      aria-labelledby="phone-inspect-title"
+      aria-label="Jun's Secure Phone"
       className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 select-none animate-fadeIn overflow-y-auto"
       onClick={onClose}
     >
@@ -47,33 +47,6 @@ export const PhoneInspectModal: React.FC<PhoneInspectModalProps> = ({
         className="w-full max-w-md bg-[#0c1611] border-2 border-[#1f3d2b] rounded-3xl p-4 sm:p-5 shadow-[0_0_50px_rgba(0,0,0,0.9)] flex flex-col justify-between max-h-[92dvh] overflow-y-auto my-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Phone Top Speaker & Notch Bar */}
-        <div className="flex items-center justify-between border-b border-[#1b3426] pb-3 mb-3">
-          <div className="flex items-center gap-2">
-            <Smartphone className="w-5 h-5 text-emerald-400" />
-            <h3
-              id="phone-inspect-title"
-              className="text-xs sm:text-sm font-mono font-bold text-emerald-300 tracking-wider uppercase"
-            >
-              JUN'S SECURE PHONE
-            </h3>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-mono text-emerald-400/70 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/40">
-              03:42 AM • 14%
-            </span>
-            <button
-              type="button"
-              onClick={onClose}
-              aria-label="Put phone down / close modal"
-              className="min-w-[44px] min-h-[44px] w-11 h-11 rounded-full bg-[#16291e] hover:bg-[#203c2c] flex items-center justify-center text-slate-300 hover:text-white transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
-
         {/* Tab Navigation */}
         <div className="flex items-center gap-2 mb-3 bg-[#08100c] p-1 rounded-xl border border-[#162b1f]">
           <button
