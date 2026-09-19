@@ -464,7 +464,7 @@ export const FallbackCharacter: React.FC<CharacterArtProps> = ({
     );
   }
 
-  // Aisyah: Yellow Cardigan & Support Emergency Sheets
+  // Aisyah: Yellow Hairclip & Support Emergency Sheets
   return (
     <svg
       className={`h-full w-auto max-w-full select-none ${className}`}
@@ -483,7 +483,7 @@ export const FallbackCharacter: React.FC<CharacterArtProps> = ({
         strokeWidth="6"
       />
 
-      {/* MANDATORY IDENTIFYING ITEM: Yellow Cardigan */}
+      {/* MANDATORY IDENTIFYING ITEM: Yellow Hairclip */}
       <path
         d="M 180,440 L 260,900 L 340,900 L 420,440 Q 300,500 180,440 Z"
         fill="#ca8a04"

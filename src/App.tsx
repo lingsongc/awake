@@ -642,6 +642,8 @@ export default function App() {
                 variant={charVariant}
                 position={char.position}
                 isMirrorScene={isMirrorScene}
+                isLarge={renderedCharacters.length > 0 && !isMirrorScene}
+                isPortrait={isPortrait}
                 isDebugMode={isDebugMode}
                 onAssetError={handleAssetError}
                 customImageSrc={getCustomImageForCharacter(char.id, charVariant, isMirrorScene)}
@@ -721,7 +723,8 @@ export default function App() {
           )}
 
           {/* Dialogue Box */}
-          {currentScene.type !== 'title' &&
+          {currentLine.text &&
+            currentScene.type !== 'title' &&
             currentScene.type !== 'end' &&
             gameState.currentSceneId !== 'act4_deduction' &&
             gameState.currentSceneId !== 'casefile' && (

@@ -52,7 +52,7 @@ export const DialogueBox: React.FC<DialogueBoxProps> = ({
           <div className="flex items-center gap-2 mb-1.5">
             <span
               id="speaker-label"
-              className="inline-block px-3 py-1 bg-[#12241b] text-[#86efac] border border-[#274937] rounded-md text-xs sm:text-sm md:text-base font-bold tracking-wider uppercase font-mono"
+              className="text-[10px] sm:text-[11px] md:text-xs text-[#86efac] font-bold tracking-wider uppercase font-mono"
             >
               {speaker}
             </span>

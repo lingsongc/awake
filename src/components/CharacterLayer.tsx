@@ -12,6 +12,8 @@ export interface CharacterLayerProps {
   name?: string;
   identifyingItem?: string;
   isMirrorScene?: boolean;
+  isLarge?: boolean;
+  isPortrait?: boolean;
   isDebugMode?: boolean;
   onAssetError?: (filename: string) => void;
 }
@@ -22,6 +24,8 @@ export const CharacterLayer: React.FC<CharacterLayerProps> = ({
   position,
   customImageSrc,
   isMirrorScene = false,
+  isLarge = false,
+  isPortrait = false,
   isDebugMode = false,
   onAssetError,
 }) => {
@@ -53,10 +57,12 @@ export const CharacterLayer: React.FC<CharacterLayerProps> = ({
   return (
     <div
       id={`character-layer-${id}`}
-      className={`absolute bottom-0 h-[70%] z-10 flex items-end justify-center pointer-events-none transition-all duration-300 ${positionClasses}`}
+      className={`absolute z-10 flex items-end justify-center pointer-events-none transition-all duration-300 ${
+        isLarge && !isPortrait ? 'bottom-[15vh] h-[140%]' : 'bottom-0 h-[70%]'
+      } ${positionClasses}`}
       style={{
-        width: '38%',
-        maxHeight: '70%',
+        width: isLarge && !isPortrait ? '76%' : '38%',
+        maxHeight: isLarge && !isPortrait ? '140%' : '70%',
       }}
     >
       {!imageFailed ? (

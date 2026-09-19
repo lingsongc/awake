@@ -53,7 +53,7 @@ export const SuspectBoard: React.FC<SuspectBoardProps> = ({
     {
       id: 'aisyah',
       name: mode === 'hallucination' ? 'CLOAKED FIGURE' : 'AISYAH (COLLEAGUE)',
-      role: mode === 'hallucination' ? 'Figure in yellow cardigan' : 'Concerned Colleague',
+      role: mode === 'hallucination' ? 'Figure with yellow hairclip' : 'Concerned Colleague',
       encountered: questioned.includes('aisyah'),
       notes:
         mode === 'hallucination'

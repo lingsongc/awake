@@ -52,7 +52,7 @@ export const SCENES: Record<string, Scene> = {
       },
       {
         speaker: '(N)',
-        text: "One wears Mum's jade bracelet. One wears Ravi's red cap. One wears Aisyah's yellow cardigan.",
+        text: "One wears a jade bracelet. One wears a red cap. One wears a yellow hairclip.",
       },
       {
         speaker: '(N)',
@@ -74,7 +74,7 @@ export const SCENES: Record<string, Scene> = {
       },
       {
         id: 'q_aisyah',
-        text: 'Question the one with the yellow cardigan',
+        text: 'Question the one with the yellow hairclip',
         nextSceneId: 'act2_aisyah_testimony',
         addClue: 't_aisyah',
       },
@@ -93,10 +93,6 @@ export const SCENES: Record<string, Scene> = {
         text: 'Jun... you locked your door [since Monday]. [Your heart]... I could hear it [pounding through the door]...',
         characterId: 'mum',
       },
-      {
-        speaker: '(N)',
-        text: "Testimony recorded: Mum's voice. She's been listening with worry through the bedroom door.",
-      },
     ],
     nextSceneId: 'act2_suspects',
   },
@@ -113,10 +109,6 @@ export const SCENES: Record<string, Scene> = {
         text: "Look like WHAT? [Jun, it's us.] [Your pupils are huge], bro... [you're drenched in sweat].",
         characterId: 'ravi',
       },
-      {
-        speaker: '(N)',
-        text: "Testimony recorded: Ravi's voice. He noticed trembling, sweating, and sleeplessness.",
-      },
     ],
     nextSceneId: 'act2_suspects',
   },
@@ -129,13 +121,9 @@ export const SCENES: Record<string, Scene> = {
     characters: [{ id: 'aisyah', position: 'center', variant: 'monster' }],
     lines: [
       {
-        speaker: '??? (yellow cardigan)',
+        speaker: '??? (yellow hairclip)',
         text: '[Ever since that party]... [did someone give you something?] [Did you take something?]',
         characterId: 'aisyah',
-      },
-      {
-        speaker: '(N)',
-        text: 'Testimony recorded: Aisyah\'s voice. She is urging everyone to seek emergency medical help.',
       },
     ],
     nextSceneId: 'act2_suspects',
