@@ -1,0 +1,144 @@
+@import "tailwindcss";
+
+@layer base {
+  html, body, #root {
+    width: 100%;
+    min-height: 100%;
+    min-height: 100dvh;
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+}
+
+.font-mono-glitch {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Safe area utilities */
+.safe-p-top {
+  padding-top: max(0.75rem, env(safe-area-inset-top));
+}
+.safe-p-bottom {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+}
+
+/* Stage 6: Hallucination Mode Sensory Distortions */
+.filter-hallucination {
+  filter: saturate(0.65) hue-rotate(65deg) contrast(1.15) brightness(0.92);
+  animation: subtle-wobble 8s ease-in-out infinite alternate;
+}
+
+@keyframes subtle-wobble {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  33% {
+    transform: scale(1.002) rotate(0.08deg);
+  }
+  66% {
+    transform: scale(0.998) rotate(-0.06deg);
+  }
+  100% {
+    transform: scale(1.001) rotate(0.04deg);
+  }
+}
+
+/* Grain overlay animation */
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-2%, -3%); }
+  30% { transform: translate(3%, 1%); }
+  50% { transform: translate(-1%, 2%); }
+  70% { transform: translate(2%, -2%); }
+  90% { transform: translate(-3%, 1%); }
+}
+
+.animate-grain {
+  animation: grain 0.5s steps(6) infinite;
+}
+
+@keyframes shake {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  20% { transform: translate(-10px, 8px) rotate(-1deg); }
+  40% { transform: translate(10px, -6px) rotate(1deg); }
+  60% { transform: translate(-8px, -4px) rotate(-1deg); }
+  80% { transform: translate(6px, 6px) rotate(0.5deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+.animate-shake {
+  animation: shake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes flash {
+  0% { opacity: 0; }
+  20% { opacity: 0.9; }
+  100% { opacity: 0; }
+}
+
+.animate-flash {
+  animation: flash 0.5s ease-out forwards;
+}
+
+/* 3D Flip Card Styles for Stage 7 Casefile */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* REDUCE MOTION: Disable wobble, flash, shake, bounce, ping, and 3D rotations */
+@media (prefers-reduced-motion: reduce) {
+  .filter-hallucination {
+    animation: none !important;
+  }
+  .animate-shake,
+  .animate-flash,
+  .animate-grain,
+  .animate-pulse,
+  .animate-ping,
+  .animate-bounce {
+    animation: none !important;
+  }
+  .rotate-y-180 {
+    transform: none !important;
+  }
+  * {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.reduce-motion .filter-hallucination {
+  animation: none !important;
+}
+
+.reduce-motion .animate-shake,
+.reduce-motion .animate-flash,
+.reduce-motion .animate-grain,
+.reduce-motion .animate-pulse,
+.reduce-motion .animate-ping,
+.reduce-motion .animate-bounce {
+  animation: none !important;
+}
+
+.reduce-motion * {
+  animation-duration: 0.001ms !important;
+  transition-duration: 0.001ms !important;
+}
+

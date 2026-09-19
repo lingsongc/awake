@@ -1,0 +1,8 @@
+{
+  "name": "WIDE AWAKE",
+  "description": "A point-and-click mystery where the detective is the suspect.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
