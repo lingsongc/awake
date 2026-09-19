@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { CLUES_DATABASE } from '../data/clues';
-import { Sparkles, ArrowRight, EyeOff } from 'lucide-react';
+import { ArrowRight, EyeOff } from 'lucide-react';
 
 export interface DeductionQuestion {
   id: string;
@@ -111,30 +111,15 @@ export const DeductionBoard: React.FC<DeductionBoardProps> = ({
       aria-label="Deduction and Case Synthesis Board"
       className="fixed inset-0 z-50 bg-[#050a07] flex flex-col justify-between p-3 sm:p-6 select-none overflow-y-auto min-h-[100dvh]"
     >
-      {/* Top Bar */}
-      <div className="w-full max-w-4xl mx-auto flex items-center justify-between border-b border-[#1b3425] pb-3 mb-4">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-emerald-950/80 border border-emerald-500/60 flex items-center justify-center text-emerald-300">
-            <Sparkles className="w-5 h-5" />
-          </div>
-          <div>
-            <h2 className="text-base sm:text-lg font-bold text-white font-mono tracking-wider">
-              MIND PALACE: DEDUCTION SYNTHESIS
-            </h2>
-            <div className="text-xs text-emerald-400/80 font-mono">{stepData.question}</div>
-          </div>
-        </div>
-      </div>
-
       {/* Main Deduction Content */}
-      <div className="w-full max-w-4xl mx-auto flex-1 flex flex-col justify-between space-y-4">
+      <div className="w-full max-w-4xl mx-auto flex-1 min-h-0 flex flex-col space-y-4">
         {/* Evidence Summary */}
-        <div className="space-y-2">
+        <div className="flex-1 min-h-0 flex flex-col space-y-2">
           <div className="text-xs font-mono uppercase tracking-wider text-slate-400 font-bold">
             Evidence Gathered ({collectedClueIds.length})
           </div>
           {collectedClueIds.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-36 overflow-y-auto pr-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 flex-1 min-h-0 overflow-y-auto pr-1">
               {collectedClueIds.map((cId) => {
                 const clue = CLUES_DATABASE[cId];
                 if (!clue) return null;
