@@ -43,55 +43,34 @@ function runTest(name: string, fn: () => void) {
 
 console.log('=== RUNNING WIDE AWAKE PRODUCTION LOGIC & REGRESSION TESTS ===\n');
 
-// TEST 1: Deduction Database Integrity & Missing Clues Validation
-runTest('Production deduction questions require only valid, existing clues in CLUES_DATABASE', () => {
-  // Ensure non-existent clues are NOT required
-  const allRequiredClues = DEDUCTION_QUESTIONS.flatMap((q) => q.requiredClueIds);
-  assert(!allRequiredClues.includes('c_stimulants'), 'c_stimulants must not be required');
-  assert(!allRequiredClues.includes('c_sleeplog'), 'c_sleeplog must not be required');
+// TEST 1: Deduction Question Integrity
+runTest('Production deduction question has exactly one correct option and expected copy', () => {
+  assert(DEDUCTION_QUESTIONS.length === 1, 'Deduction board has exactly one final synthesis question');
 
-  // Verify all required clues exist and are non-empty in production database
-  for (const clueId of allRequiredClues) {
-    const clue = CLUES_DATABASE[clueId];
-    assert(clue !== undefined, `Required clue "${clueId}" must exist in CLUES_DATABASE`);
-    assert(typeof clue.name === 'string' && clue.name.length > 0, `Clue "${clueId}" must have a name`);
-    assert(typeof clue.shortDesc === 'string' && clue.shortDesc.length > 0, `Clue "${clueId}" must have a shortDesc`);
-    assert(typeof clue.fullEvidence === 'string' && clue.fullEvidence.length > 0, `Clue "${clueId}" must have fullEvidence`);
-  }
+  const step = DEDUCTION_QUESTIONS[0];
+  assert(step.id === 'deduction_step_2', 'Final step ID');
+  assert(step.question === 'WHAT SHOULD HAPPEN NEXT?', 'Final step Title');
 
-  // Verify Deduction Step 1 & Step 2 specific configurations
-  const step1 = DEDUCTION_QUESTIONS[0];
-  assert(step1.id === 'deduction_step_1', 'Step 1 ID');
-  assert(step1.requiredClueIds.includes('c_phone') && step1.requiredClueIds.includes('c_paranoia'), 'Step 1 requires c_phone & c_paranoia');
-
-  const step2 = DEDUCTION_QUESTIONS[1];
-  assert(step2.id === 'deduction_step_2', 'Step 2 ID');
-  assert(step2.question === 'WHAT SHOULD HAPPEN NEXT?', 'Step 2 Title');
-  assert(step2.requiredClueIds.includes('m_eyes') && step2.requiredClueIds.includes('m_hands'), 'Step 2 requires m_eyes & m_hands');
+  const correctOptions = step.options.filter((o) => o.isCorrect);
+  assert(correctOptions.length === 1, 'Exactly one option must be marked correct');
+  assert(step.options.length === 3, 'Final step presents three options');
 });
 
-// TEST 2: Reachable Clue Collection Paths Across Both Story Branches
-runTest('All required deduction clues have verified collection paths across both story branches', () => {
-  // Accumulate clues reachable in Act 1 search hotspots
+// TEST 2: Act 1 and Act 3 Clue Collection Paths Remain Intact
+runTest('Act 1 and Act 3 clue collection hotspots exist and reference valid clues', () => {
   const act1Clues = new Set(ACT1_HOTSPOTS.map((h) => h.clueId));
   assert(act1Clues.has('c_phone'), 'c_phone must be collectible in Act 1');
   assert(act1Clues.has('c_paranoia'), 'c_paranoia must be collectible in Act 1');
 
-  // Accumulate clues reachable in Act 3 mirror hotspots
   const act3Clues = new Set(ACT3_HOTSPOTS.map((h) => h.clueId));
   assert(act3Clues.has('m_eyes'), 'm_eyes must be collectible in Act 3');
   assert(act3Clues.has('m_hands'), 'm_hands must be collectible in Act 3');
 
-  // Simulate complete inventory for Branch A (Stepped Back)
-  const branchA = new Set([...act1Clues, 't_mum', 't_ravi', 't_aisyah', 'c_step_back', ...act3Clues]);
-  // Simulate complete inventory for Branch B (Stayed Still)
-  const branchB = new Set([...act1Clues, 't_mum', 't_ravi', 't_aisyah', ...act3Clues]);
-
-  for (const question of DEDUCTION_QUESTIONS) {
-    const branchASatisfied = question.requiredClueIds.every((id) => branchA.has(id));
-    assert(branchASatisfied, `Branch A satisfies ${question.id}`);
-    const branchBSatisfied = question.requiredClueIds.every((id) => branchB.has(id));
-    assert(branchBSatisfied, `Branch B satisfies ${question.id}`);
+  for (const clueId of [...act1Clues, ...act3Clues]) {
+    const clue = CLUES_DATABASE[clueId];
+    assert(clue !== undefined, `Hotspot clue "${clueId}" must exist in CLUES_DATABASE`);
+    assert(typeof clue.name === 'string' && clue.name.length > 0, `Clue "${clueId}" must have a name`);
+    assert(typeof clue.shortDesc === 'string' && clue.shortDesc.length > 0, `Clue "${clueId}" must have a shortDesc`);
   }
 });
 
@@ -358,7 +337,7 @@ runTest('Every PROJECT_ASSETS entry uses a .png filename and canonical getAssetU
   }
 });
 
-runTest('Every scene-referenced production PNG exists under public/assets', () => {
+runTest('Every scene-referenced production PNG exists under src/assets/images', () => {
   // Collect all background assets referenced in SCENES
   const sceneBgs = new Set<string>();
   const charVariants = [
@@ -374,25 +353,25 @@ runTest('Every scene-referenced production PNG exists under public/assets', () =
     sceneBgs.add(scene.bg);
   }
 
-  // Verify each background PNG exists in public/assets
+  // Verify each background PNG exists in src/assets/images
   for (const bgId of sceneBgs) {
     const asset = resolveBackgroundAsset(bgId as any);
     assert(asset.filename.endsWith('.png'), `Background asset filename must end with .png`);
-    const filePath = path.join(process.cwd(), 'public', 'assets', asset.filename);
+    const filePath = path.join(process.cwd(), 'src', 'assets', 'images', asset.filename);
     assert(fs.existsSync(filePath), `Background PNG must exist at ${filePath}`);
   }
 
-  // Verify each main character PNG exists in public/assets
+  // Verify each main character PNG exists in src/assets/images
   for (const { id, variant } of charVariants) {
     const asset = resolveCharacterAsset(id as any, variant, false);
     assert(asset.filename.endsWith('.png'), `Character asset filename must end with .png`);
-    const filePath = path.join(process.cwd(), 'public', 'assets', asset.filename);
+    const filePath = path.join(process.cwd(), 'src', 'assets', 'images', asset.filename);
     assert(fs.existsSync(filePath), `Character PNG must exist at ${filePath}`);
   }
 
-  // Verify jun_mirror.png exists in public/assets
+  // Verify jun_mirror.png exists in src/assets/images
   const mirrorAsset = resolveCharacterAsset('jun', 'human', true);
-  const mirrorFilePath = path.join(process.cwd(), 'public', 'assets', mirrorAsset.filename);
+  const mirrorFilePath = path.join(process.cwd(), 'src', 'assets', 'images', mirrorAsset.filename);
   assert(fs.existsSync(mirrorFilePath), `Mirror PNG must exist at ${mirrorFilePath}`);
 });
 

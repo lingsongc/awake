@@ -2,9 +2,6 @@ import React from 'react';
 import { ArrowRight, DoorOpen } from 'lucide-react';
 
 interface SearchHUDProps {
-  sceneTitle: string;
-  foundClues: string[];
-  totalClues: number;
   onProceed?: () => void;
   canProceed: boolean;
   proceedLabel?: string;
@@ -14,9 +11,6 @@ interface SearchHUDProps {
 }
 
 export const SearchHUD: React.FC<SearchHUDProps> = ({
-  sceneTitle,
-  foundClues,
-  totalClues,
   onProceed,
   canProceed,
   proceedLabel = 'Proceed to next scene',
