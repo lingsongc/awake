@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowRight, RotateCw, CheckCircle2, FileText, AlertCircle } from 'lucide-react';
+import { ArrowRight, RotateCw, CheckCircle2 } from 'lucide-react';
 import { FallbackCardArt } from './FallbackArt';
 
 interface CaseFileCard {
@@ -83,8 +83,6 @@ export const CaseFileScreen: React.FC<CaseFileScreenProps> = ({
   };
 
   const allViewed = CASE_CARDS.every((c) => viewedCards[c.id]);
-  const viewedCount = CASE_CARDS.filter((c) => viewedCards[c.id]).length;
-
   return (
     <div
       id="case-file-screen"
@@ -92,38 +90,6 @@ export const CaseFileScreen: React.FC<CaseFileScreenProps> = ({
       aria-label="Case File Revelations: Compare Hallucinations to Reality"
       className="fixed inset-0 z-50 bg-[#040806] flex flex-col justify-between p-3 sm:p-6 select-none overflow-y-auto min-h-[100dvh]"
     >
-      {/* Top Banner */}
-      <div className="w-full max-w-6xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-[#1b3425] pb-3 mb-4 gap-3">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-emerald-950/80 border border-emerald-500/60 flex items-center justify-center text-emerald-300 shrink-0">
-            <FileText className="w-5 h-5" />
-          </div>
-          <div>
-            <h2 className="text-base sm:text-lg font-bold text-white font-mono tracking-wider">
-              CASE FILE REVELATIONS
-            </h2>
-            <div className="text-xs text-emerald-400 font-mono">
-              Click or tap each card to flip between Hallucination and Reality ({viewedCount}/4 Revealed)
-            </div>
-          </div>
-        </div>
-
-        {/* Status Chip */}
-        <div className="flex items-center gap-2">
-          {allViewed ? (
-            <div className="px-3 py-1 rounded-full bg-emerald-950 border border-emerald-400 text-emerald-300 font-mono text-xs font-bold flex items-center gap-1.5">
-              <CheckCircle2 className="w-3.5 h-3.5" />
-              <span>ALL FILES DECRYPTED</span>
-            </div>
-          ) : (
-            <div className="px-3 py-1 rounded-full bg-amber-950/80 border border-amber-600/70 text-amber-300 font-mono text-xs flex items-center gap-1.5">
-              <AlertCircle className="w-3.5 h-3.5" />
-              <span>FLIP ALL 4 CARDS TO PROCEED</span>
-            </div>
-          )}
-        </div>
-      </div>
-
       {/* Cards Grid */}
       <div className="w-full max-w-6xl mx-auto flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
         {CASE_CARDS.map((card) => {
@@ -152,6 +118,7 @@ export const CaseFileScreen: React.FC<CaseFileScreenProps> = ({
                   <FallbackCardArt
                     cardId={card.cardId}
                     variant={isFlipped ? 'human' : 'monster'}
+                    useMirrorForJun={card.cardId === 'jun'}
                     className="w-full h-full object-cover"
                   />
 

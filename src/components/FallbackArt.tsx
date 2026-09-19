@@ -509,8 +509,9 @@ export const FallbackCharacter: React.FC<CharacterArtProps> = ({
 export const FallbackCardArt: React.FC<{
   cardId: 'mum' | 'ravi' | 'aisyah' | 'door' | 'jun' | string;
   variant: 'monster' | 'human' | 'hallucination' | 'truth';
+  useMirrorForJun?: boolean;
   className?: string;
-}> = ({ cardId, variant, className = '' }) => {
+}> = ({ cardId, variant, useMirrorForJun = false, className = '' }) => {
   const isMonster = variant === 'monster' || variant === 'hallucination';
   const [imageError, setImageError] = useState(false);
 
@@ -537,7 +538,7 @@ export const FallbackCardArt: React.FC<{
   const asset = resolveCharacterAsset(
     charId,
     isMonster ? 'monster' : 'human',
-    false
+    useMirrorForJun && charId === 'jun'
   );
 
   return (
@@ -554,7 +555,7 @@ export const FallbackCardArt: React.FC<{
         <FallbackCharacter
           id={charId}
           variant={isMonster ? 'monster' : 'human'}
-          isMirrorScene={false}
+          isMirrorScene={useMirrorForJun && charId === 'jun'}
           className="w-full h-full max-h-full object-contain"
         />
       )}
